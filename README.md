@@ -6,9 +6,7 @@ RESILIENT LINUX SERVER 2.0
 Here are the instructions on how to build the base ISO image, which also contains the installer (https://github.com/marco-buratto/resilientlinux-installer) for creating the liveng partitioning scheme onto disk.
 
 
-
-How to build the ISO image
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+**How to build the ISO image**
 
 A **Debian Buster** host is required for the build; other Debian-derived systems may work.
 
