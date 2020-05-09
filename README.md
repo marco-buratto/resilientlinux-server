@@ -5,6 +5,10 @@ RESILIENT LINUX SERVER 2.0
 
 Here are the instructions on how to build the base ISO image, which also contains the installer (https://github.com/marco-buratto/resilientlinux-installer) for creating the liveng partitioning scheme onto disk.
 
+**How to install**
+
+Boot the system with the ISO image, login as *root* / *password* and launch the *resilientlinux-install.sh* script.
+
 
 **How to build the ISO image**
 
