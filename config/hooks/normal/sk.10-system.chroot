@@ -1,0 +1,54 @@
+#!/bin/bash
+
+LOGFILE="/dev/null"
+COLOR='\e[91m'
+
+if [ -r  /live-build/config/hooks/normal/sk.00-functions.utils ]; then
+    . /live-build/config/hooks/normal/sk.00-functions.utils
+fi
+
+####################################################################################################################################
+# System-related installations and key configurations.
+####################################################################################################################################
+
+# Enable the systemd rc.local compatibility (transitional).
+systemctl enable rc-local |&log
+
+# TimeZone UTC (@todo: via filesystem).
+ln -fs /usr/share/zoneinfo/UTC /etc/localtime |&log
+
+# NTP (@todo).
+
+cat > /etc/os-release <<EOF
+NAME="Resilient Linux SERVER"
+PRETTY_NAME="Resilient Linux SERVER"
+VERSION="2.0"
+BUILD="$(date +'%Y%m%d:%H%m')"
+BUILD_ID="$(date +'%Y%m%d:%H%m')"
+ID=resilient-linux
+EOF
+
+# Set splash (Plymouth) theme.
+plymouth-set-default-theme spinner |&log
+
+# Rebuild the initrd.
+update-initramfs -u |&log
+
+# Root password.
+printf "password\npassword" | passwd
+
+# Installer.
+dpkg -i /resilientlinux-server-installer_2.1-1_all.deb |&log
+apt install -f -y
+
+####################################################################################################################################
+# Force includes-chroot-injected files' permissions.
+####################################################################################################################################
+
+# Set includes-chroot-injected files' permissions which differ from standard umask.
+# live-build process must always be run as root, as well as git clone.
+chmod +x /etc/rc.local |&log
+chmod +x /etc/rc.local.d/* |&log
+
+# Again, cryptsetup within initrd broken. Fix it!
+chmod +x /etc/initramfs-tools/hooks/cryptsetup.hook.sh |&log

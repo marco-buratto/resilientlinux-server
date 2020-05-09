@@ -1,0 +1,16 @@
+.build
+.lock
+.workdir
+.config.empty
+.project
+cache
+cache-*
+chroot
+chroot.files
+chroot.packages.install
+chroot.packages.live
+live-image-*
+
+config/includes.chroot/rocksolid-signage-installer.deb
+config/includes.chroot/rocksolid-signage.iso
+
